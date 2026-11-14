@@ -6,6 +6,7 @@
 #
 # This workflow publishes tools/ as the site root. It runs when main changes
 # the tools or this file, and when someone starts it with "Run workflow".
+# An empty commit does not match the path filter, so it does not start a run.
 #
 # One-time setup, if Pages has never been switched to GitHub Actions:
 #   Repository Settings → Pages → Build and deployment → Source: GitHub Actions
