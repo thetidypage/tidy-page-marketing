@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Puppy Age Calculator UK – How Old Is My Puppy in Weeks?</title>
+  <meta name="description" content="Free UK puppy age calculator. See age in weeks and days, and which of the first 12 weeks at home this is. Runs in your browser. No tracking.">
+  <meta name="robots" content="index,follow">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f3efe6">
+  <link rel="canonical" href="https://thetidypage.github.io/tidy-page-marketing/puppy-age-calculator/">
+  <meta property="og:title" content="Puppy Age Calculator UK – How Old Is My Puppy in Weeks?">
+  <meta property="og:description" content="Free UK puppy age calculator. See age in weeks and days, and which of the first 12 weeks at home this is. Runs in your browser. No tracking.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:site_name" content="The Tidy Page">
+  <meta property="og:url" content="https://thetidypage.github.io/tidy-page-marketing/puppy-age-calculator/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Puppy Age Calculator UK – How Old Is My Puppy in Weeks?">
+  <meta name="twitter:description" content="Free UK puppy age calculator. See age in weeks and days, and which of the first 12 weeks at home this is. Runs in your browser. No tracking.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f4d3e'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23f3efe6'/%3E%3C/svg%3E">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How is a puppy's age in weeks calculated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The page counts whole calendar days from the date of birth to today on this device, then divides by 7. Remaining days are shown as days. It does not round up. A puppy born 56 days ago is 8 weeks and 0 days. The time of birth is not used. If you are not sure of the exact day, the result is only as accurate as the date you enter. Once the puppy is at least one calendar month old, a calendar age is shown too. A calendar month is not exactly four weeks, so the two ages will not always match."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the first 12 weeks at home?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It is a planning window that starts on the collection or home date you enter. The home date counts as day 1. Week 1 is days 1 to 7, and week 12 is days 78 to 84. The next day, the first 12 weeks are complete. Leave the home date blank and the page only shows age from birth. It is not a training plan and it is not medical advice."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this say when to vaccinate, when to worm, or how much to feed?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. It does not give vaccination dates, dosing, or feeding amounts. The short notes are ordinary things owners often plan around an age, such as registering with a vet. General guidance only. Always follow your vet's advice."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my puppy's date of birth stored?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The dates stay in the browser tab. This page does not set cookies, does not use analytics, and does not send what you type to a server. Closing the tab clears it. There is no account."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is it called a UK calculator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Dates are written day, month, year, and the wording is for people bringing a puppy home in the UK. The arithmetic is the number of calendar days between two dates, so the same count works in any country. It does not use a separate UK formula."
+        }
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --cream: #f3efe6;
+      --paper: #fbf8f2;
+      --ink: #1b2a23;
+      --muted: #31463c;
+      --sage: #2f4d3e;
+      --sage-deep: #243f33;
+      --line: #d3cdc0;
+      --soft: #e7f0ea;
+      --error: #6e1f1a;
+      --error-bg: #f8ece8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    [hidden] { display: none !important; }
+
+    html { scroll-behavior: auto; }
+
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 1.0625rem;
+      line-height: 1.5;
+      border-top: 8px solid var(--sage);
+    }
+
+    .skip {
+      position: absolute;
+      left: 0.75rem;
+      top: 0;
+      transform: translateY(-120%);
+      background: var(--ink);
+      color: var(--paper);
+      padding: 0.6rem 0.9rem;
+      z-index: 2;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .skip:focus { transform: none; }
+
+    :focus-visible {
+      outline: 3px solid var(--ink);
+      outline-offset: 2px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 42rem;
+      margin: 0 auto;
+      padding: 1.25rem 1rem 3rem;
+    }
+
+    .eyebrow {
+      margin: 0 0 0.35rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    h1, h2, h3 {
+      font-family: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+
+    h1 { margin: 0; font-size: clamp(2rem, 8vw, 2.75rem); letter-spacing: -0.02em; }
+    h2 { margin: 0 0 0.6rem; font-size: 1.5rem; }
+    h3 { margin: 0 0 0.4rem; font-size: 1.2rem; }
+
+    p { margin: 0 0 0.75rem; }
+    p:last-child { margin-bottom: 0; }
+
+    .lede {
+      margin: 0.6rem 0 0;
+      font-size: 1.25rem;
+    }
+
+    .intro { margin: 0.75rem 0 0; max-width: 38rem; }
+
+    a {
+      color: #1e4636;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.15em;
+    }
+
+    a:visited { color: #1e4636; }
+    a:hover { text-decoration-thickness: 2px; }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1.15rem;
+      margin-top: 1.25rem;
+    }
+
+    #results { background: var(--soft); }
+
+    .fields { display: block; }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+      min-width: 0;
+    }
+
+    label { font-weight: 700; }
+
+    .hint, .meter-key, .secondary-line { color: var(--muted); }
+
+    input[type="date"] {
+      font: inherit;
+      font-size: 16px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--muted);
+      border-radius: 10px;
+      min-height: 48px;
+      padding: 0.5rem 0.75rem;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    #results-title:focus {
+      outline: 3px solid var(--ink);
+      outline-offset: 2px;
+    }
+
+    .error {
+      color: var(--error);
+      background: var(--error-bg);
+      border: 1px solid var(--error);
+      border-radius: 8px;
+      padding: 0.55rem 0.75rem;
+      margin: 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    button {
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 10px;
+      min-height: 48px;
+      padding: 0.7rem 1rem;
+      width: 100%;
+    }
+
+    .primary {
+      background: var(--sage);
+      color: var(--paper);
+      border: 2px solid var(--sage);
+    }
+
+    .primary:hover { background: var(--sage-deep); border-color: var(--sage-deep); }
+
+    .secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 2px solid var(--sage);
+    }
+
+    .secondary:hover { background: var(--soft); }
+
+    .figure {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.2rem 0.45rem;
+      margin: 0 0 0.6rem;
+    }
+
+    .figure .num {
+      font-family: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+      font-size: 2.75rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .figure .unit { font-weight: 700; margin-right: 0.2rem; }
+
+    .home-block { margin-top: 1.1rem; padding-top: 0.9rem; border-top: 1px solid #c5d5cb; }
+
+    .meter {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 6px;
+      padding: 0;
+      margin: 0.75rem 0 0.4rem;
+    }
+
+    .meter li {
+      margin: 0;
+      text-align: center;
+      font-size: 0.875rem;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      padding: 0.55rem 0;
+      border-radius: 6px;
+      border: 1px solid #c9c3b6;
+      background: var(--paper);
+      color: var(--muted);
+    }
+
+    .meter li.is-done {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: var(--paper);
+    }
+
+    .meter li.is-now {
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .plans { border-left: 4px solid var(--sage); }
+
+    .plans ul, .plain-list { margin: 0.25rem 0 0.75rem; padding-left: 1.2rem; }
+    .plans li, .plain-list li { margin: 0.25rem 0; }
+
+    .disclaimer {
+      margin: 0.9rem 0 0;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .link-list { list-style: none; padding: 0; margin: 0.25rem 0 0; }
+    .link-list li { margin: 0; border-top: 1px solid var(--line); }
+    .link-list a { display: block; padding: 0.85rem 0; min-height: 48px; }
+
+    footer {
+      margin-top: 1.5rem;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    @media (min-width: 720px) {
+      .wrap { padding-top: 2.5rem; }
+      .fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .field { margin-bottom: 0; }
+      .actions { flex-direction: row; margin-top: 1rem; }
+      .actions button { width: auto; }
+      .meter { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    }
+
+    @media (forced-colors: active) {
+      body { border-top-color: CanvasText; }
+      button, input, .card, .meter li { border-color: CanvasText; }
+      .primary { background: ButtonFace; color: ButtonText; }
+    }
+
+    @media print {
+      .skip, .actions, .link-list { display: none; }
+      body { border-top: 0; background: #fff; }
+      .card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#calculator">Skip to the calculator</a>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow">Free UK tool from The Tidy Page</p>
+      <h1 id="page-title">Puppy Age Calculator</h1>
+      <p class="lede">How old is my puppy in weeks?</p>
+      <p class="intro">Enter a date of birth and, if you know it, the day your puppy came home. You get an age in weeks and days, and which week of the first 12 weeks at home this is.</p>
+      <p class="intro" id="today-line">Today's date is read from this device.</p>
+    </header>
+
+    <main>
+      <noscript>
+        <p class="error">JavaScript is off, so the age cannot be calculated. The script runs only on this device and does not contact a server. The questions further down the page can still be read.</p>
+      </noscript>
+
+      <form id="calculator" class="card" aria-labelledby="page-title" novalidate>
+        <div class="fields">
+          <div class="field">
+            <label for="dob">Date of birth</label>
+            <input id="dob" name="dob" type="date" autocomplete="off" required aria-describedby="dob-hint dob-echo dob-error">
+            <p class="hint" id="dob-hint">The day your puppy was born. If you type it, use day/month/year. The line under the field shows the date as day, month, year.</p>
+            <p class="hint" id="dob-echo" hidden></p>
+            <p class="error" id="dob-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="home">Collection or home date <span class="hint">(optional)</span></label>
+            <input id="home" name="home" type="date" autocomplete="off" aria-describedby="home-hint home-echo home-error">
+            <p class="hint" id="home-hint">The day your puppy came home, or the day you plan to collect them. Used only for the 12-week counter.</p>
+            <p class="hint" id="home-echo" hidden></p>
+            <p class="error" id="home-error" hidden></p>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="primary" type="submit">Calculate age</button>
+          <button class="secondary" id="clear" type="button">Clear dates</button>
+        </div>
+        <p class="hint" style="margin-top: 0.9rem;">Calculated on this device. Nothing you type is stored or sent.</p>
+      </form>
+
+      <div id="results" class="card" aria-live="polite" aria-atomic="true">
+        <h2 id="results-title" tabindex="-1">Age</h2>
+        <p id="result-empty">Add a date of birth to see the age in weeks and days.</p>
+        <p class="figure" id="result-figure" hidden>
+          <span id="weeks-num" class="num"></span>
+          <span id="weeks-unit" class="unit"></span>
+          <span class="and">and</span>
+          <span id="days-num" class="num"></span>
+          <span id="days-unit" class="unit"></span>
+        </p>
+        <p id="result-count" hidden></p>
+        <p class="secondary-line" id="result-calendar" hidden></p>
+        <div class="home-block" id="home-block" hidden>
+          <h3>First 12 weeks at home</h3>
+          <p id="home-summary"></p>
+          <p class="secondary-line" id="home-detail" hidden></p>
+          <ol class="meter" id="home-meter" hidden aria-hidden="true">
+            <li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li>
+            <li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li>
+          </ol>
+          <p class="meter-key" id="home-meter-key" hidden></p>
+        </div>
+      </div>
+
+      <section id="plans" class="card plans" hidden aria-labelledby="plans-title">
+        <h2 id="plans-title">Typical things owners plan around this age</h2>
+        <p id="plans-band"></p>
+        <ul id="plans-list"></ul>
+        <p class="disclaimer">General guidance only. Always follow your vet's advice.</p>
+      </section>
+
+      <section class="card" aria-labelledby="method-title">
+        <h2 id="method-title">How the weeks are counted</h2>
+        <p>The page counts every calendar day from the date of birth up to today on this phone or computer, then divides by 7. Leftover days stay as days. Nothing is rounded up to the next week.</p>
+        <p>The home date is separate. It starts a 12-week counter that many owners use as a settling-in window. Week 1 begins on the home date, which counts as day 1. Week 12 is days 78 to 84. The next day, that window is complete.</p>
+        <p>A calendar age appears once your puppy is at least a month old. Calendar months are not exactly four weeks, so that line will not always match the week count. The date of birth is repeated in the result so you can see how it was read.</p>
+        <p>After this page has loaded, the counting works offline. It does not need an account.</p>
+        <p class="disclaimer">General guidance only. Always follow your vet's advice.</p>
+      </section>
+
+      <section class="card" aria-labelledby="printables-title">
+        <h2 id="printables-title">Printable pages from The Tidy Page</h2>
+        <p>These are plain links to The Tidy Page, a printables store. Each name is the product on that page.</p>
+        <ul class="link-list">
+          <li><a href="https://thetidypage.co.uk/b/zI9cw?utm_source=puppy-age-calculator&amp;utm_medium=referral&amp;utm_campaign=free-tool">UK Puppy Planner Bundle from The Tidy Page</a></li>
+          <li><a href="https://thetidypage.co.uk/b/Js27y?utm_source=puppy-age-calculator&amp;utm_medium=referral&amp;utm_campaign=free-tool">New Puppy Checklist from The Tidy Page</a></li>
+          <li><a href="https://thetidypage.co.uk/b/Q8NwZ?utm_source=puppy-age-calculator&amp;utm_medium=referral&amp;utm_campaign=free-tool">Puppy Socialisation Checklist from The Tidy Page</a></li>
+          <li><a href="https://thetidypage.co.uk/b/dNpDO?utm_source=puppy-age-calculator&amp;utm_medium=referral&amp;utm_campaign=free-tool">Puppy Toilet Training Chart from The Tidy Page</a></li>
+        </ul>
+      </section>
+
+      <section class="card" aria-labelledby="reading-title">
+        <h2 id="reading-title">Further reading</h2>
+        <p>PDSA puppy pages, if you want to read around the first days. This calculator is not written by PDSA, and it does not replace their pages or your vet.</p>
+        <ul class="link-list">
+          <li><a href="https://www.pdsa.org.uk/pet-help-and-advice/looking-after-your-pet/puppies-dogs">Puppies and dogs (PDSA)</a></li>
+          <li><a href="https://www.pdsa.org.uk/pet-help-and-advice/looking-after-your-pet/puppies-dogs/first-day-and-night-with-puppy">First day and night with a puppy (PDSA)</a></li>
+        </ul>
+      </section>
+
+      <section class="card" aria-labelledby="faq-title">
+        <h2 id="faq-title">Questions</h2>
+
+        <h3>How is a puppy's age in weeks calculated?</h3>
+        <p>The page counts whole calendar days from the date of birth to today on this device, then divides by 7. Remaining days are shown as days. It does not round up. A puppy born 56 days ago is 8 weeks and 0 days. The time of birth is not used. If you are not sure of the exact day, the result is only as accurate as the date you enter. Once the puppy is at least one calendar month old, a calendar age is shown too. A calendar month is not exactly four weeks, so the two ages will not always match.</p>
+
+        <h3>What is the first 12 weeks at home?</h3>
+        <p>It is a planning window that starts on the collection or home date you enter. The home date counts as day 1. Week 1 is days 1 to 7, and week 12 is days 78 to 84. The next day, the first 12 weeks are complete. Leave the home date blank and the page only shows age from birth. It is not a training plan and it is not medical advice.</p>
+
+        <h3>Does this say when to vaccinate, when to worm, or how much to feed?</h3>
+        <p>No. It does not give vaccination dates, dosing, or feeding amounts. The short notes are ordinary things owners often plan around an age, such as registering with a vet. General guidance only. Always follow your vet's advice.</p>
+
+        <h3>Is my puppy's date of birth stored?</h3>
+        <p>No. The dates stay in the browser tab. This page does not set cookies, does not use analytics, and does not send what you type to a server. Closing the tab clears it. There is no account.</p>
+
+        <h3>Why is it called a UK calculator?</h3>
+        <p>Dates are written day, month, year, and the wording is for people bringing a puppy home in the UK. The arithmetic is the number of calendar days between two dates, so the same count works in any country. It does not use a separate UK formula.</p>
+      </section>
+    </main>
+
+    <footer>
+      <p>A free tool from The Tidy Page. No cookies and no account. Dates stay on this device.</p>
+    </footer>
+  </div>
+  <script>
+    (function () {
+      "use strict";
+
+      var form = document.getElementById("calculator");
+      var dobInput = document.getElementById("dob");
+      var homeInput = document.getElementById("home");
+      var dobError = document.getElementById("dob-error");
+      var homeError = document.getElementById("home-error");
+      var dobEcho = document.getElementById("dob-echo");
+      var homeEcho = document.getElementById("home-echo");
+      var clearButton = document.getElementById("clear");
+      var todayLine = document.getElementById("today-line");
+      var resultsTitle = document.getElementById("results-title");
+      var resultEmpty = document.getElementById("result-empty");
+      var resultFigure = document.getElementById("result-figure");
+      var weeksNum = document.getElementById("weeks-num");
+      var weeksUnit = document.getElementById("weeks-unit");
+      var daysNum = document.getElementById("days-num");
+      var daysUnit = document.getElementById("days-unit");
+      var resultCount = document.getElementById("result-count");
+      var resultCalendar = document.getElementById("result-calendar");
+      var homeBlock = document.getElementById("home-block");
+      var homeSummary = document.getElementById("home-summary");
+      var homeDetail = document.getElementById("home-detail");
+      var homeMeter = document.getElementById("home-meter");
+      var homeMeterKey = document.getElementById("home-meter-key");
+      var plans = document.getElementById("plans");
+      var plansBand = document.getElementById("plans-band");
+      var plansList = document.getElementById("plans-list");
+
+      var dayFormat = new Intl.DateTimeFormat("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+      var weekdayFormat = new Intl.DateTimeFormat("en-GB", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+
+      function startOfToday() {
+        var now = new Date();
+        return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      }
+
+      function toISO(date) {
+        var month = String(date.getMonth() + 1);
+        var day = String(date.getDate());
+        if (month.length < 2) month = "0" + month;
+        if (day.length < 2) day = "0" + day;
+        return date.getFullYear() + "-" + month + "-" + day;
+      }
+
+      function parseDate(value) {
+        var text = String(value || "").trim();
+        var match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(text);
+        var year;
+        var month;
+        var day;
+        if (match) {
+          year = Number(match[1]);
+          month = Number(match[2]);
+          day = Number(match[3]);
+        } else {
+          match = /^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/.exec(text);
+          if (!match) return null;
+          day = Number(match[1]);
+          month = Number(match[2]);
+          year = Number(match[3]);
+        }
+        var date = new Date(year, month - 1, day);
+        if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
+          return null;
+        }
+        return date;
+      }
+
+      function daysBetween(from, to) {
+        var start = new Date(from.getFullYear(), from.getMonth(), from.getDate());
+        var end = new Date(to.getFullYear(), to.getMonth(), to.getDate());
+        return Math.round((end.getTime() - start.getTime()) / 86400000);
+      }
+
+      function calendarAge(from, to) {
+        var years = to.getFullYear() - from.getFullYear();
+        var months = to.getMonth() - from.getMonth();
+        var days = to.getDate() - from.getDate();
+        if (days < 0) {
+          months -= 1;
+          days += new Date(to.getFullYear(), to.getMonth(), 0).getDate();
+        }
+        if (months < 0) {
+          years -= 1;
+          months += 12;
+        }
+        return { years: years, months: months, days: days };
+      }
+
+      function plural(count, word) {
+        return count === 1 ? word : word + "s";
+      }
+
+      function qty(count, word) {
+        return count + " " + plural(count, word);
+      }
+
+      function joinAnd(parts) {
+        if (parts.length <= 1) return parts[0] || "";
+        if (parts.length === 2) return parts[0] + " and " + parts[1];
+        return parts.slice(0, -1).join(", ") + " and " + parts[parts.length - 1];
+      }
+
+      function planFor(weeks, years) {
+        if (years >= 1 || weeks >= 53) {
+          return {
+            label: "Over 52 weeks old (about a year or more).",
+            items: [
+              "A single place for the microchip number and vet details",
+              "A sitter sheet with the usual routine",
+              "Household rules kept the same while the dog grows up"
+            ]
+          };
+        }
+        if (weeks >= 27) {
+          return {
+            label: "About 27 to 52 weeks old (around 6 to 12 months).",
+            items: [
+              "Shorter training sessions during adolescence",
+              "Recall practice",
+              "Vet and microchip details, looked at again",
+              "A sitter sheet with the usual routine"
+            ]
+          };
+        }
+        if (weeks >= 17) {
+          return {
+            label: "About 17 to 26 weeks old (around 4 to 6 months).",
+            items: [
+              "Lead practice in quiet places",
+              "A local puppy class to ask about",
+              "House rules that stay the same for everyone at home",
+              "Microchip contact details, still up to date"
+            ]
+          };
+        }
+        if (weeks >= 13) {
+          return {
+            label: "About 13 to 16 weeks old.",
+            items: [
+              "Socialisation outings kept short",
+              "Toilet training, still part of the day",
+              "Name and recall practice at home",
+              "A list of questions for the vet"
+            ]
+          };
+        }
+        if (weeks >= 8) {
+          return {
+            label: "About 8 to 12 weeks old.",
+            items: [
+              "Vet registration",
+              "Microchip check",
+              "Socialisation outings",
+              "A toilet-training routine",
+              "Settling a daily rhythm"
+            ]
+          };
+        }
+        return {
+          label: "Under 8 weeks old.",
+          items: [
+            "A vet practice to register with",
+            "A quiet sleeping spot and a toilet spot",
+            "Cover for the first few days at home",
+            "The journey and the first night"
+          ]
+        };
+      }
+
+      function setFieldError(input, element, message) {
+        if (element.hidden || element.textContent !== message) {
+          element.textContent = message;
+        }
+        element.hidden = false;
+        input.setAttribute("aria-invalid", "true");
+      }
+
+      function clearFieldError(input, element) {
+        element.textContent = "";
+        element.hidden = true;
+        input.removeAttribute("aria-invalid");
+      }
+
+      function showEcho(element, date) {
+        if (!date) {
+          element.textContent = "";
+          element.hidden = true;
+          return;
+        }
+        element.hidden = false;
+        element.textContent = "UK date: " + dayFormat.format(date) + ".";
+      }
+
+      function showEmpty(message) {
+        resultEmpty.hidden = false;
+        resultEmpty.textContent = message;
+        resultFigure.hidden = true;
+        resultCount.hidden = true;
+        resultCalendar.hidden = true;
+        homeBlock.hidden = true;
+        plans.hidden = true;
+      }
+
+      function paintMeter(currentWeek) {
+        var items = homeMeter.querySelectorAll("li");
+        for (var i = 0; i < items.length; i++) {
+          items[i].classList.remove("is-done", "is-now");
+          var week = i + 1;
+          if (currentWeek >= 13 || week < currentWeek) items[i].classList.add("is-done");
+          else if (week === currentWeek) items[i].classList.add("is-now");
+        }
+      }
+
+      function showHomePrompt(message) {
+        homeBlock.hidden = false;
+        homeSummary.textContent = message;
+        homeDetail.hidden = true;
+        homeDetail.textContent = "";
+        homeMeter.hidden = true;
+        homeMeterKey.hidden = true;
+      }
+
+      function renderHome(home, today) {
+        var daysAtHome = daysBetween(home, today);
+        var homeText = dayFormat.format(home);
+        if (daysAtHome < 0) {
+          showHomePrompt("This home date is still ahead: " + homeText + ", " + qty(-daysAtHome, "day") + " from today. Week 1 of 12 starts on that day.");
+          return;
+        }
+        homeBlock.hidden = false;
+        homeDetail.hidden = false;
+        homeMeter.hidden = false;
+        homeMeterKey.hidden = false;
+        var dayNumber = daysAtHome + 1;
+        if (dayNumber > 84) {
+          homeSummary.textContent = "The first 12 weeks at home are complete.";
+          homeDetail.textContent = "Home for " + qty(Math.floor(daysAtHome / 7), "week") + " and " + qty(daysAtHome % 7, "day") + ", since " + homeText + ". The window was the first 84 days, counting the home date as day 1.";
+          paintMeter(13);
+          homeMeterKey.textContent = "All 12 boxes are filled because the first 12 weeks at home are finished.";
+          return;
+        }
+        var week = Math.floor((dayNumber - 1) / 7) + 1;
+        var startDay = (week - 1) * 7 + 1;
+        var endDay = week * 7;
+        homeSummary.textContent = "Today is day " + dayNumber + " at home. That is week " + week + " of 12 (days " + startDay + " to " + endDay + ").";
+        homeDetail.textContent = "Home date: " + homeText + ".";
+        paintMeter(week);
+        homeMeterKey.textContent = "Filled boxes are finished weeks. The bold box is the current week.";
+      }
+
+      function renderPlans(weeks, years) {
+        var plan = planFor(weeks, years);
+        plans.hidden = false;
+        plansBand.textContent = plan.label;
+        plansList.replaceChildren();
+        for (var i = 0; i < plan.items.length; i++) {
+          var item = document.createElement("li");
+          item.textContent = plan.items[i];
+          plansList.appendChild(item);
+        }
+      }
+
+      function update() {
+        var today = startOfToday();
+        var dobText = dobInput.value.trim();
+        var homeText = homeInput.value.trim();
+        var dob = dobText ? parseDate(dobText) : null;
+        var home = homeText ? parseDate(homeText) : null;
+
+        clearFieldError(dobInput, dobError);
+        clearFieldError(homeInput, homeError);
+        showEcho(dobEcho, dob);
+        showEcho(homeEcho, home);
+        if (dob) homeInput.min = toISO(dob);
+        else homeInput.removeAttribute("min");
+
+        if (!dobText) {
+          showEmpty("Add a date of birth to see the age in weeks and days.");
+          return;
+        }
+        if (!dob) {
+          setFieldError(dobInput, dobError, "Enter a real date of birth. You can use the date picker or type day/month/year.");
+          showEmpty("Enter a real date of birth to see an age.");
+          return;
+        }
+
+        var ageDays = daysBetween(dob, today);
+        if (ageDays < 0) {
+          var future = "That date of birth is in the future. Check the day, month, and year.";
+          setFieldError(dobInput, dobError, future);
+          showEmpty(future);
+          return;
+        }
+
+        var weeks = Math.floor(ageDays / 7);
+        var extraDays = ageDays % 7;
+        var cal = calendarAge(dob, today);
+
+        resultEmpty.hidden = true;
+        resultFigure.hidden = false;
+        weeksNum.textContent = String(weeks);
+        weeksUnit.textContent = plural(weeks, "week");
+        daysNum.textContent = String(extraDays);
+        daysUnit.textContent = plural(extraDays, "day");
+        resultCount.hidden = false;
+        resultCount.textContent = qty(ageDays, "day") + " old. Date of birth " + dayFormat.format(dob) + ". Counted to " + weekdayFormat.format(today) + ".";
+
+        var calendarParts = [];
+        if (cal.years) calendarParts.push(qty(cal.years, "year"));
+        if (cal.months) calendarParts.push(qty(cal.months, "month"));
+        if (cal.days) calendarParts.push(qty(cal.days, "day"));
+        if (cal.years || cal.months) {
+          resultCalendar.hidden = false;
+          resultCalendar.textContent = "On the calendar: " + joinAnd(calendarParts) + ". A calendar month is not exactly four weeks.";
+        } else {
+          resultCalendar.hidden = true;
+          resultCalendar.textContent = "";
+        }
+
+        if (homeText && !home) {
+          setFieldError(homeInput, homeError, "Enter a real home date, or leave it blank. You can use the date picker or type day/month/year.");
+          showHomePrompt("The home date could not be read. Age above uses the date of birth only.");
+        } else if (home && daysBetween(dob, home) < 0) {
+          setFieldError(homeInput, homeError, "The home date is before the date of birth. Check both dates.");
+          showHomePrompt("The home date is before the date of birth. Check both dates.");
+        } else if (!home) {
+          showHomePrompt("Add a collection or home date to see which of the first 12 weeks at home this is.");
+        } else {
+          renderHome(home, today);
+        }
+
+        renderPlans(weeks, cal.years);
+      }
+
+      todayLine.textContent = "Today on this device: " + weekdayFormat.format(startOfToday()) + ".";
+      dobInput.max = toISO(startOfToday());
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        update();
+        if (!dobInput.value.trim()) {
+          setFieldError(dobInput, dobError, "Add a date of birth.");
+          dobInput.focus();
+          return;
+        }
+        if (dobInput.getAttribute("aria-invalid") === "true") {
+          dobInput.focus();
+          return;
+        }
+        if (homeInput.getAttribute("aria-invalid") === "true") {
+          homeInput.focus();
+          return;
+        }
+        resultsTitle.focus();
+      });
+
+      dobInput.addEventListener("input", update);
+      dobInput.addEventListener("change", update);
+      homeInput.addEventListener("input", update);
+      homeInput.addEventListener("change", update);
+
+      clearButton.addEventListener("click", function () {
+        dobInput.value = "";
+        homeInput.value = "";
+        update();
+        dobInput.focus();
+      });
+    }());
+  </script>
+</body>
+</html>

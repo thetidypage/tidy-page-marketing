@@ -1,0 +1,57 @@
+# Deploy the tools/ directory with GitHub Pages.
+#
+# Expected public URLs once a deploy has succeeded:
+#   https://thetidypage.github.io/tidy-page-marketing/
+#   https://thetidypage.github.io/tidy-page-marketing/puppy-age-calculator/
+#
+# This workflow publishes tools/ as the site root. It runs when main changes
+# the tools or this file, and when someone starts it with "Run workflow".
+#
+# One-time setup, if Pages has never been switched to GitHub Actions:
+#   Repository Settings → Pages → Build and deployment → Source: GitHub Actions
+#
+# The default GITHUB_TOKEN can deploy a site, but it cannot turn Pages on.
+# actions/configure-pages can try enablement only with a separate admin token,
+# which this repository does not store. After the source is GitHub Actions,
+# merging this workflow to main is enough for the next run to publish tools/.
+
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "tools/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload tools folder
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: tools
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
